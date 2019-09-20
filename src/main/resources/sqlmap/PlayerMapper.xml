@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="us.data.nba.mapper.PlayerMapper" >
+    <resultMap id="BaseResultMap" type="us.data.nba.entity.Player" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="brith" property="brith" jdbcType="DATE" />
+        <result column="nationality" property="nationality" jdbcType="VARCHAR" />
+        <result column="height" property="height" jdbcType="DOUBLE" />
+        <result column="weight" property="weight" jdbcType="DOUBLE" />
+        <result column="ArmE" property="arme" jdbcType="DOUBLE" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, name, brith, nationality, height, weight, ArmE
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from player
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from player
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from player
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <delete id="deleteByName" parameterType="java.lang.String" >
+    delete from player
+    where name = #{name,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insert" parameterType="us.data.nba.entity.Player" >
+    insert into player (id, name, brith,
+      nationality, height,
+      weight, ArmE)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{brith,jdbcType=DATE},
+      #{nationality,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER},
+      #{weight,jdbcType=INTEGER}, #{arme,jdbcType=INTEGER})
+  </insert>
+
+    <insert id="insertSelective" parameterType="us.data.nba.entity.Player" >
+        insert into player
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="brith != null" >
+                brith,
+            </if>
+            <if test="nationality != null" >
+                nationality,
+            </if>
+            <if test="height != null" >
+                height,
+            </if>
+            <if test="weight != null" >
+                weight,
+            </if>
+            <if test="arme != null" >
+                ArmE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="brith != null" >
+                #{brith,jdbcType=DATE},
+            </if>
+            <if test="nationality != null" >
+                #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null" >
+                #{height,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null" >
+                #{weight,jdbcType=INTEGER},
+            </if>
+            <if test="arme != null" >
+                #{arme,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="us.data.nba.entity.Player"  >
+        update player
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="brith != null" >
+                brith = #{brith,jdbcType=DATE},
+            </if>
+            <if test="nationality != null" >
+                nationality = #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null" >
+                height = #{height,jdbcType=DOUBLE},
+            </if>
+            <if test="weight != null" >
+                weight = #{weight,jdbcType=DOUBLE},
+            </if>
+            <if test="arme != null" >
+                ArmE = #{arme,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="us.data.nba.entity.Player" >
+    update player
+    set name = #{name,jdbcType=VARCHAR},
+      brith = #{brith,jdbcType=DATE},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      ArmE = #{arme,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

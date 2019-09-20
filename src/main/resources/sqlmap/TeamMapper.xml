@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="us.data.nba.mapper.TeamMapper" >
+    <resultMap id="BaseResultMap" type="us.data.nba.entity.Team" >
+        <id column="teamid" property="teamid" jdbcType="INTEGER" />
+        <result column="n   ame" property="name" jdbcType="VARCHAR" />
+        <result column="createdata" property="createdata" jdbcType="DATE" />
+        <result column="location" property="location" jdbcType="VARCHAR" />
+        <result column="nameofgym" property="nameofgym" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    teamid, name, createdata, location, nameofgym
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from team
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from team
+    where teamid = #{teamid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="us.data.nba.entity.Team" >
+    insert into team (teamid, name, createdata,
+      location, nameofgym)
+    values (#{teamid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createdata,jdbcType=DATE},
+      #{location,jdbcType=VARCHAR}, #{nameofgym,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="us.data.nba.entity.Team" >
+        insert into team
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="teamid != null" >
+                teamid,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="createdata != null" >
+                createdata,
+            </if>
+            <if test="location != null" >
+                location,
+            </if>
+            <if test="nameofgym != null" >
+                nameofgym,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="teamid != null" >
+                #{teamid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createdata != null" >
+                #{createdata,jdbcType=DATE},
+            </if>
+            <if test="location != null" >
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="nameofgym != null" >
+                #{nameofgym,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="us.data.nba.entity.Team" >
+        update team
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createdata != null" >
+                createdata = #{createdata,jdbcType=DATE},
+            </if>
+            <if test="location != null" >
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="nameofgym != null" >
+                nameofgym = #{nameofgym,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where teamid = #{teamid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="us.data.nba.entity.Team" >
+    update team
+    set name = #{name,jdbcType=VARCHAR},
+      createdata = #{createdata,jdbcType=DATE},
+      location = #{location,jdbcType=VARCHAR},
+      nameofgym = #{nameofgym,jdbcType=VARCHAR}
+    where teamid = #{teamid,jdbcType=INTEGER}
+  </update>
+</mapper>

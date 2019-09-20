@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="us.data.nba.mapper.TeaminfoMapper" >
+    <resultMap id="BaseResultMap" type="us.data.nba.entity.Teaminfo" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <id column="teamid" property="teamid" jdbcType="INTEGER" />
+        <result column="cstart" property="cstart" jdbcType="DATE" />
+        <result column="cend" property="cend" jdbcType="DATE" />
+        <result column="salary" property="salary" jdbcType="INTEGER" />
+        <result column="avgscore" property="avgscore" jdbcType="DOUBLE" />
+        <result column="avgbackboard" property="avgbackboard" jdbcType="DOUBLE" />
+        <result column="avgassists" property="avgassists" jdbcType="DOUBLE" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, teamid, cstart, cend, salary, avgscore, avgbackboard, avgassists
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="us.data.nba.entity.Teaminfo" >
+        select
+        <include refid="Base_Column_List" />
+        from teaminfo
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="us.data.nba.entity.Teaminfo" >
+    delete from teaminfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="us.data.nba.entity.Teaminfo" >
+    insert into teaminfo (id, teamid, cstart,
+      cend, salary, avgscore,
+      avgbackboard, avgassists)
+    values (#{id,jdbcType=INTEGER}, #{teamid,jdbcType=INTEGER}, #{cstart,jdbcType=DATE},
+      #{cend,jdbcType=DATE}, #{salary,jdbcType=INTEGER}, #{avgscore,jdbcType=DOUBLE},
+      #{avgbackboard,jdbcType=DOUBLE}, #{avgassists,jdbcType=DOUBLE})
+  </insert>
+    <insert id="insertSelective" parameterType="us.data.nba.entity.Teaminfo" >
+        insert into teaminfo
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="teamid != null" >
+                teamid,
+            </if>
+            <if test="cstart != null" >
+                cstart,
+            </if>
+            <if test="cend != null" >
+                cend,
+            </if>
+            <if test="salary != null" >
+                salary,
+            </if>
+            <if test="avgscore != null" >
+                avgscore,
+            </if>
+            <if test="avgbackboard != null" >
+                avgbackboard,
+            </if>
+            <if test="avgassists != null" >
+                avgassists,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="teamid != null" >
+                #{teamid,jdbcType=INTEGER},
+            </if>
+            <if test="cstart != null" >
+                #{cstart,jdbcType=DATE},
+            </if>
+            <if test="cend != null" >
+                #{cend,jdbcType=DATE},
+            </if>
+            <if test="salary != null" >
+                #{salary,jdbcType=INTEGER},
+            </if>
+            <if test="avgscore != null" >
+                #{avgscore,jdbcType=DOUBLE},
+            </if>
+            <if test="avgbackboard != null" >
+                #{avgbackboard,jdbcType=DOUBLE},
+            </if>
+            <if test="avgassists != null" >
+                #{avgassists,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="us.data.nba.entity.Teaminfo" >
+        update teaminfo
+        <set >
+            <if test="cstart != null" >
+                cstart = #{cstart,jdbcType=DATE},
+            </if>
+            <if test="cend != null" >
+                cend = #{cend,jdbcType=DATE},
+            </if>
+            <if test="salary != null" >
+                salary = #{salary,jdbcType=INTEGER},
+            </if>
+            <if test="avgscore != null" >
+                avgscore = #{avgscore,jdbcType=DOUBLE},
+            </if>
+            <if test="avgbackboard != null" >
+                avgbackboard = #{avgbackboard,jdbcType=DOUBLE},
+            </if>
+            <if test="avgassists != null" >
+                avgassists = #{avgassists,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+        and teamid = #{teamid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="us.data.nba.entity.Teaminfo" >
+    update teaminfo
+    set cstart = #{cstart,jdbcType=DATE},
+      cend = #{cend,jdbcType=DATE},
+      salary = #{salary,jdbcType=INTEGER},
+      avgscore = #{avgscore,jdbcType=DOUBLE},
+      avgbackboard = #{avgbackboard,jdbcType=DOUBLE},
+      avgassists = #{avgassists,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+      and teamid = #{teamid,jdbcType=INTEGER}
+  </update>
+    <select id="showTeam" resultType="us.data.nba.entity.ShowTeam">
+        SELECT a.name as playerName,b.name as teamName from teaminfo c inner join team b on c.teamid=b.teamid
+        and b.name=#{name,jdbcType=VARCHAR} inner join player a on a.id=c.id;
+    </select>
+</mapper>

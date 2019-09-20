@@ -1,0 +1,58 @@
+server:
+  port: 20014
+
+
+mybatis:
+  mapper-locations: classpath:sqlmap/*.xml
+  type-aliases-package: us.data.nba.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+## 日志接口
+spring:
+  #  application:
+  #    name: smartmonitor-back
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      allow-pool-suspension: true
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+
+---
+#hhh
+spring:
+  profiles: online
+  datasource:
+    url: jdbc:mysql://172.25.241.238:3306/qppa_znjk?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: znjk
+    password: znjk@WS3ed
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/nba?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123
+
+  redis:
+    database: 0
+    timeout: 10000
+    password:
+
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
